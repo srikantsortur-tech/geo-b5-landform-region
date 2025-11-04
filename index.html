@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 9 Landform Regions Challenge</title>
+    <!-- Load Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the geography theme */
+        :root {
+            --color-shield: #facc15; /* Yellow/Gold */
+            --color-cordillera: #10b981; /* Green */
+            --color-appalachians: #fb7185; /* Pink/Rose */
+            --color-lowlands: #38bdf8; /* Sky Blue */
+            --color-plains: #fb923c; /* Orange */
+            --color-bg: #1f2937; /* Dark Slate */
+            --color-text: #f9fafb; /* Light Gray */
+            --color-card: #374151; /* Medium Slate */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card {
+            background-color: var(--color-card);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
+        /* Buttons for the 7 regions */
+        .btn-region {
+            transition: all 0.2s;
+            font-weight: 600;
+            padding: 0.75rem 0.5rem;
+            border-radius: 0.75rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            font-size: 0.875rem; /* Small font for 7 options */
+            min-height: 50px;
+        }
+        .btn-shield { background-color: var(--color-shield); color: var(--color-bg); }
+        .btn-cordillera { background-color: var(--color-cordillera); }
+        .btn-appalachians { background-color: var(--color-appalachians); }
+        .btn-plains { background-color: var(--color-plains); }
+        .btn-lowlands { background-color: var(--color-lowlands); }
+        .btn-innuitian { background-color: #6366f1; } /* Indigo */
+        .btn-hb_arctic { background-color: #06b6d4; } /* Cyan */
+
+        .btn-region:hover:not(:disabled) {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        .correct-answer {
+            background-color: #10b981 !important; /* Green */
+        }
+        .incorrect-answer {
+            background-color: #ef4444 !important; /* Red */
+        }
+        .tab-btn {
+            font-size: 1.125rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-btn.active {
+            color: #38bdf8; /* Sky Blue */
+            border-color: #38bdf8;
+            background-color: #374151;
+        }
+        .tab-btn:not(.active):hover {
+            color: #fff;
+        }
+
+        /* Responsive Image Styling */
+        .diagram-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="w-full max-w-5xl p-4 md:p-8 space-y-6">
+        <header class="text-center">
+            <h1 class="text-4xl font-extrabold text-white mb-2">Canada's Landform Regions Challenge</h1>
+            <p class="text-xl text-gray-400">Match the geological clue to the correct region.</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="flex space-x-2">
+            <button id="tab-quiz" class="tab-btn active" onclick="switchView('quiz')">Quiz Challenge</button>
+            <button id="tab-cheat-sheet" class="tab-btn text-gray-400" onclick="switchView('cheat-sheet')">Cheat Sheet</button>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Main View Column (Quiz or Cheat Sheet) -->
+            <div id="main-view-container" class="lg:col-span-2 card p-6 space-y-6">
+
+                <!-- --- QUIZ VIEW --- -->
+                <div id="quiz-view">
+                    <h2 class="text-2xl font-bold border-b pb-3 border-gray-600">Region Descriptor Match</h2>
+                    
+                    <!-- Diagram Toggle -->
+                    <div class="mb-4 text-center">
+                        <button id="toggle-diagram" onclick="toggleDiagram()" class="text-sm text-gray-300 hover:text-sky-400 focus:outline-none">
+                            [Click to Toggle Landform Map]
+                        </button>
+                        <div id="quiz-diagram-container" class="mt-4 p-3 bg-gray-800 rounded-lg hidden">
+                            <!-- Image will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
+
+                    <!-- Question Area -->
+                    <div class="bg-gray-700 p-4 rounded-lg shadow-inner min-h-[100px]">
+                        <p id="question-number" class="text-sm font-semibold text-gray-400 mb-2">Clue 1/10</p>
+                        <p id="question-text" class="text-2xl font-light text-white leading-relaxed">...</p>
+                    </div>
+
+                    <!-- Answer Buttons (7 options in a 4x2 grid) -->
+                    <div id="answer-buttons" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <button class="btn-region btn-shield" data-answer="Canadian Shield">Canadian Shield</button>
+                        <button class="btn-region btn-cordillera" data-answer="Western Cordillera">Western Cordillera</button>
+                        <button class="btn-region btn-appalachians" data-answer="Appalachian Mountains">Appalachian Mountains</button>
+                        <button class="btn-region btn-plains" data-answer="Interior Plains">Interior Plains</button>
+                        <button class="btn-region btn-lowlands" data-answer="Great Lakes-St. Lawrence Lowlands">Great Lakes-St. Lawrence Lowlands</button>
+                        <button class="btn-region btn-innuitian" data-answer="Innuitian Mountains">Innuitian Mountains</button>
+                        <button class="btn-region btn-hb_arctic" data-answer="Hudson Bay-Arctic Lowlands">Hudson Bay-Arctic Lowlands</button>
+                    </div>
+
+                    <!-- Feedback Area -->
+                    <div id="feedback-area" class="min-h-[100px] p-4 rounded-lg hidden transition-all duration-300">
+                        <h3 id="feedback-title" class="text-xl font-bold mb-2"></h3>
+                        <p id="feedback-explanation" class="text-lg"></p>
+                    </div>
+
+                    <button id="next-button" class="w-full bg-gray-500 hover:bg-gray-400 text-white font-bold py-3 rounded-lg mt-4 hidden transition-colors" onclick="nextQuestion()">Next Clue &rarr;</button>
+                </div>
+
+                <!-- --- CHEAT SHEET VIEW (Visual Cards) --- -->
+                <div id="cheat-sheet-view" class="hidden">
+                    <h2 class="text-2xl font-bold border-b pb-3 border-gray-600 text-sky-400">Landform Regions Cheat Sheet</h2>
+                    <p class="text-gray-300 mb-6">Connect the region's features to its location and formation process.</p>
+
+                    <!-- Landform Map Placeholder -->
+                    <div class="mb-8 p-4 bg-gray-800 rounded-xl">
+                        <h3 class="text-xl font-bold text-teal-400 mb-3">Map of Landform Regions</h3>
+                        <div id="cheat-sheet-diagram-container">
+                             <!-- Image will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Canadian Shield -->
+                        <div class="p-4 rounded-xl border-t-8 border-yellow-500 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-yellow-400 mb-2 flex items-center">
+                                Canadian Shield 🛡️
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: **Igneous & Metamorphic**. World's oldest rocks. </p>
+                            <div class="p-3 bg-yellow-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Storehouse of Metallic Minerals</p>
+                                <p class="text-sm">Roots of ancient mountains, now rounded hills. Contains vast deposits of gold, copper, nickel, and diamonds.</p>
+                            </div>
+                        </div>
+
+                        <!-- Western Cordillera -->
+                        <div class="p-4 rounded-xl border-t-8 border-green-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-green-400 mb-2 flex items-center">
+                                Western Cordillera 🏔️
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: Varied (Folding, Faulting, Volcanic). Formed by plate subduction.</p>
+                            <div class="p-3 bg-green-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Youngest & Most Rugged</p>
+                                <p class="text-sm">High, rugged mountains (Rockies, Coast, Columbia). Features **fjords** (drowned glacial valleys) along the coast.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Appalachian Mountains -->
+                        <div class="p-4 rounded-xl border-t-8 border-rose-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-rose-400 mb-2 flex items-center">
+                                Appalachian Mountains 🍂
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: Sedimentary rock, uplifted and folded 300 million years ago.</p>
+                            <div class="p-3 bg-rose-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Oldest Highland, Drowned Coastline</p>
+                                <p class="text-sm">Rounded hills due to billions of years of erosion. Long bays provide deep harbours; rich in non-metallic minerals (coal).</p>
+                            </div>
+                        </div>
+
+                        <!-- Interior Plains -->
+                        <div class="p-4 rounded-xl border-t-8 border-orange-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-orange-400 mb-2 flex items-center">
+                                Interior Plains 🌾
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: **Sedimentary** rock from Shield sediments deposited in ancient seas.</p>
+                            <div class="p-3 bg-orange-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Canada's Breadbasket, Oil/Gas Deposits</p>
+                                <p class="text-sm">Rolling hills, deep valleys, sloping west to east. Rich soil from Lake Agassiz remnants; oil, gas, and potash from ancient coral reefs.</p>
+                            </div>
+                        </div>
+
+                        <!-- Great Lakes-St. Lawrence Lowlands -->
+                        <div class="p-4 rounded-xl border-t-8 border-sky-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-sky-400 mb-2 flex items-center">
+                                Great Lakes-St. Lawrence Lowlands 🏙️
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: **Sedimentary** rock. St. Lawrence formed by a **rift valley** (faulting).</p>
+                            <div class="p-3 bg-sky-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Most Populated, Niagara Escarpment</p>
+                                <p class="text-sm">Smallest region. Flat/rolling landscape ideal for farming and cities. Glaciers carved out the Great Lakes basins.</p>
+                            </div>
+                        </div>
+
+                        <!-- Innuitian Mountains -->
+                        <div class="p-4 rounded-xl border-t-8 border-indigo-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-indigo-400 mb-2 flex items-center">
+                                Innuitian Mountains 🧊
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: Mostly Sedimentary rock. Formed mid-Mesozoic era.</p>
+                            <div class="p-3 bg-indigo-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Barren, Remote, Ice-covered North</p>
+                                <p class="text-sm">Younger than Appalachians, older than Cordillera. Mineral resources exist but are too costly to exploit due to location.</p>
+                            </div>
+                        </div>
+
+                        <!-- Hudson Bay-Arctic Lowlands -->
+                        <div class="p-4 rounded-xl border-t-8 border-cyan-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-cyan-400 mb-2 flex items-center">
+                                Hudson Bay-Arctic Lowlands 🌲
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Geology: **Sedimentary** rock resting on top of Canadian Shield rock.</p>
+                            <div class="p-3 bg-cyan-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">Clue: Flat, Swampy, Deposits of Lignite</p>
+                                <p class="text-sm">Very low-lying area. Hudson Bay Lowlands are swampy forest. Arctic Lowlands contain lignite, oil, and natural gas deposits.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Score/Reference Column -->
+            <div class="lg:col-span-1 space-y-6">
+                <div id="score-box" class="card p-4 text-center">
+                    <p class="text-lg font-semibold text-gray-400">Your Current Score:</p>
+                    <p id="score-display" class="text-5xl font-extrabold text-teal-400">0/0</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data structure for the quiz (Updated for 7 landform regions)
+        const quizData = [
+            // Shield
+            {
+                question: "This region consists of **rounded hills** and is known as the **'storehouse of metallic minerals'** (gold, copper, nickel).",
+                answer: "Canadian Shield",
+                explanation: "The Canadian Shield contains the world's oldest rocks (Igneous/Metamorphic) and its surface is the eroded **roots of ancient mountains**.",
+                clue_type: "Canadian Shield",
+            },
+            // Western Cordillera
+            {
+                question: "This geologically **young** region features **high, rugged mountain ranges** (Rockies, Coast) and deep inlets called **fjords**.",
+                answer: "Western Cordillera",
+                explanation: "The Western Cordillera was formed by the **collision of the North American and Pacific plates** (subduction), leading to its tall, youthful appearance.",
+                clue_type: "Western Cordillera",
+            },
+            // Appalachians
+            {
+                question: "This is the **oldest highland region**, now characterized by **rolling mountains and hills** and a **'drowned coastline'** that creates deep harbours.",
+                answer: "Appalachian Mountains",
+                explanation: "The Appalachians were formed 300 million years ago and have been eroded for so long that their jagged peaks are now rounded.",
+                clue_type: "Appalachian Mountains",
+            },
+            // Interior Plains
+            {
+                question: "This region, often called **'Canada's breadbasket'**, contains thick sedimentary rock layers that hold much of the country's **oil, gas, and potash**.",
+                answer: "Interior Plains",
+                explanation: "The Interior Plains were formed by sediments deposited in shallow inland seas. The ancient coral reefs and layers now hold valuable fossil fuels and potash.",
+                clue_type: "Interior Plains",
+            },
+            // Great Lakes-St. Lawrence Lowlands
+            {
+                question: "This is the **most densely populated** and smallest region. The **Niagara Escarpment** and a **rift valley** are key features.",
+                answer: "Great Lakes-St. Lawrence Lowlands",
+                explanation: "The St. Lawrence portion was created by **faulting** that formed a rift valley. The Great Lakes portion features the prominent Niagara Escarpment (differential erosion).",
+                clue_type: "Great Lakes-St. Lawrence Lowlands",
+            },
+            // Innuitian Mountains
+            {
+                question: "These **barren, ice-covered mountains** in the **far north** are composed mainly of sedimentary rock, but resources are undeveloped due to their **remote location**.",
+                answer: "Innuitian Mountains",
+                explanation: "The Innuitian Mountains are younger than the Appalachians and older than the Cordillera. Their extreme northern location makes them permanently barren.",
+                clue_type: "Innuitian Mountains",
+            },
+            // Hudson Bay-Arctic Lowlands
+            {
+                question: "This region is a **very flat, low area** covered by **swampy forest** around Hudson Bay, with sedimentary rock resting directly on the Shield.",
+                answer: "Hudson Bay-Arctic Lowlands",
+                explanation: "This area was covered by water after the last ice age, which deposited the sand, silt, and clay that became the thin layer of sedimentary rock over the Shield.",
+                clue_type: "Hudson Bay-Arctic Lowlands",
+            },
+            // Process Question: Plate Movement
+            {
+                question: "Which mountain range was formed when **North America collided with Europe and northern Africa** (forming Pangaea)?",
+                answer: "Appalachian Mountains",
+                explanation: "This collision caused the layers of sedimentary rock in the Appalachians to be uplifted and folded at the end of the Paleozoic era.",
+                clue_type: "Process",
+            },
+            // Process Question: Glaciation
+            {
+                question: "The **scraping and gouging action of glaciers** created basins that filled with water, forming the hundreds of thousands of lakes that characterize this region.",
+                answer: "Canadian Shield",
+                explanation: "The impervious bedrock of the Canadian Shield, combined with glacial scraping, created the disorganized drainage pattern and vast number of lakes seen today.",
+                clue_type: "Process",
+            },
+            // Clue: Most important for manufacturing
+            {
+                question: "This region makes up only 1.4% of Canada's area but is the **industrial and urban heartland**, containing Toronto and Montreal.",
+                answer: "Great Lakes-St. Lawrence Lowlands",
+                explanation: "The excellent soils, warm climate, and flat land make it ideal for both agriculture and the high concentration of industry and population (about 50% of Canada's population).",
+                clue_type: "Great Lakes-St. Lawrence Lowlands",
+            }
+        ].sort(() => Math.random() - 0.5); // Shuffle the questions
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        // Landform Map Placeholder Image
+        const landformDiagramUrl = "https://placehold.co/800x450/4f46e5/ffffff?text=Map+of+Canada's+Landform+Regions"; 
+        
+        // This is the HTML structure for the diagram (using the image URL)
+        const landformDiagramHtml = `<img src="${landformDiagramUrl}" onerror="this.onerror=null; this.src='https://placehold.co/800x450/cc5500/ffffff?text=Map+Placeholder+Error';" alt="Map of Canada's Landform Regions" class="diagram-image">`;
+
+
+        // DOM elements
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerButtonsContainer = document.getElementById('answer-buttons');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitleEl = document.getElementById('feedback-title');
+        const feedbackExplanationEl = document.getElementById('feedback-explanation');
+        const nextButton = document.getElementById('next-button');
+        const scoreDisplay = document.getElementById('score-display');
+        
+        const quizView = document.getElementById('quiz-view');
+        const cheatSheetView = document.getElementById('cheat-sheet-view');
+        const tabQuiz = document.getElementById('tab-quiz');
+        const tabCheatSheet = document.getElementById('tab-cheat-sheet');
+        
+        const quizDiagramContainer = document.getElementById('quiz-diagram-container');
+        const cheatSheetDiagramContainer = document.getElementById('cheat-sheet-diagram-container');
+
+        // --- VIEW SWITCHING LOGIC ---
+        window.switchView = function(viewName) {
+            if (viewName === 'quiz') {
+                quizView.classList.remove('hidden');
+                cheatSheetView.classList.add('hidden');
+                tabQuiz.classList.add('active');
+                tabCheatSheet.classList.remove('active');
+                tabQuiz.classList.remove('text-gray-400');
+                tabCheatSheet.classList.add('text-gray-400');
+            } else if (viewName === 'cheat-sheet') {
+                quizView.classList.add('hidden');
+                cheatSheetView.classList.remove('hidden');
+                tabCheatSheet.classList.add('active');
+                tabQuiz.classList.remove('active');
+                tabCheatSheet.classList.remove('text-gray-400');
+                tabQuiz.classList.add('text-gray-400');
+            }
+        }
+        
+        // --- DIAGRAM TOGGLE LOGIC ---
+        window.toggleDiagram = function() {
+            quizDiagramContainer.classList.toggle('hidden');
+            const button = document.getElementById('toggle-diagram');
+            if (quizDiagramContainer.classList.contains('hidden')) {
+                button.textContent = '[Click to Toggle Landform Map]';
+            } else {
+                button.textContent = '[Click to Hide Landform Map]';
+            }
+        }
+
+        // Function to load the current question
+        function loadQuestion() {
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+                return;
+            }
+
+            const currentQ = quizData[currentQuestionIndex];
+            
+            // Reset UI
+            feedbackArea.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.disabled = false;
+                button.classList.remove('correct-answer', 'incorrect-answer');
+                // Ensure proper class is re-applied
+                const answerType = button.dataset.answer;
+                button.className = 'btn-region'; // Base class
+                if (answerType.includes('Shield')) {
+                    button.classList.add('btn-shield');
+                } else if (answerType.includes('Cordillera')) {
+                    button.classList.add('btn-cordillera');
+                } else if (answerType.includes('Appalachian')) {
+                    button.classList.add('btn-appalachians');
+                } else if (answerType.includes('Plains')) {
+                    button.classList.add('btn-plains');
+                } else if (answerType.includes('Lowlands')) {
+                    button.classList.add('btn-lowlands');
+                } else if (answerType.includes('Innuitian')) {
+                    button.classList.add('btn-innuitian');
+                } else if (answerType.includes('Hudson Bay-Arctic')) {
+                    button.classList.add('btn-hb_arctic');
+                }
+            });
+
+            // Update question text
+            questionNumberEl.textContent = `Clue ${currentQuestionIndex + 1}/${totalQuestions}`;
+            questionTextEl.innerHTML = currentQ.question;
+            scoreDisplay.textContent = `${score}/${currentQuestionIndex}`;
+        }
+
+        // Function to handle the user's answer
+        function selectAnswer(event) {
+            const selectedButton = event.target;
+            if (!selectedButton.classList.contains('btn-region')) return;
+
+            const selectedAnswer = selectedButton.dataset.answer;
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const explanation = quizData[currentQuestionIndex].explanation;
+
+            // Disable all buttons
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.disabled = true;
+            });
+
+            // Show feedback
+            feedbackArea.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                selectedButton.classList.add('correct-answer');
+                feedbackArea.style.backgroundColor = 'rgba(16, 185, 129, 0.2)'; // Green transparent
+                feedbackTitleEl.textContent = "That's Correct!";
+                feedbackTitleEl.classList.remove('text-red-400');
+                feedbackTitleEl.classList.add('text-green-400');
+            } else {
+                selectedButton.classList.add('incorrect-answer');
+                // Find the correct button and highlight it
+                const correctButton = Array.from(answerButtonsContainer.children).find(btn => btn.dataset.answer === correctAnswer);
+                correctButton.classList.add('correct-answer');
+
+                feedbackArea.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'; // Red transparent
+                feedbackTitleEl.textContent = "Not Quite. Let's Review!";
+                feedbackTitleEl.classList.remove('text-green-400');
+                feedbackTitleEl.classList.add('text-red-400');
+            }
+
+            feedbackExplanationEl.innerHTML = explanation;
+            scoreDisplay.textContent = `${score}/${currentQuestionIndex + 1}`;
+        }
+
+        // Function to move to the next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // Function to show final results
+        function showResults() {
+            questionNumberEl.textContent = `Challenge Complete!`;
+            questionTextEl.innerHTML = `You finished the quiz! You scored **${score} out of ${totalQuestions}** (${Math.round((score / totalQuestions) * 100)}%). Fantastic work!`;
+
+            answerButtonsContainer.innerHTML = '';
+            feedbackArea.classList.remove('hidden');
+            feedbackArea.style.backgroundColor = 'rgba(74, 222, 128, 0.2)';
+            feedbackTitleEl.textContent = 'Next Steps:';
+            feedbackTitleEl.classList.remove('text-red-400');
+            feedbackTitleEl.classList.add('text-green-400');
+            feedbackExplanationEl.innerHTML = 'Review the questions you missed, or visit the **Cheat Sheet** for a quick refresher. You can refresh the page to restart the challenge!';
+            nextButton.classList.add('hidden');
+        }
+
+        // Initial setup
+        window.onload = function() {
+            // Insert the HTML image into both containers
+            quizDiagramContainer.innerHTML = landformDiagramHtml;
+            cheatSheetDiagramContainer.innerHTML = landformDiagramHtml;
+            loadQuestion();
+            // Attach event listener to answer buttons
+            answerButtonsContainer.addEventListener('click', selectAnswer);
+        };
+    </script>
+
+</body>
+</html>
