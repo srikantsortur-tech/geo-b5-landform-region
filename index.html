@@ -302,7 +302,7 @@
             {
                 question: "These **barren, ice-covered mountains** in the **far north** are composed mainly of sedimentary rock, but resources are undeveloped due to their **remote location**.",
                 answer: "Innuitian Mountains",
-                explanation: "The Innuitian Mountains are younger than the Appalachians and older than the Cordillera. Their extreme northern location makes them permanently barren.",
+                explanation: "The Innuitian Mountains are younger than Appalachians, older than Cordillera. Their extreme northern location makes them permanently barren.",
                 clue_type: "Innuitian Mountains",
             },
             // Hudson Bay-Arctic Lowlands
@@ -339,11 +339,11 @@
         let score = 0;
         const totalQuestions = quizData.length;
 
-        // Landform Map Placeholder Image
-        const landformDiagramUrl = "https://placehold.co/800x450/4f46e5/ffffff?text=Map+of+Canada's+Landform+Regions"; 
+        // Landform Map Image FIX: Updated to the correct GitHub "Raw" content URL.
+        const landformDiagramUrl = "https://raw.githubusercontent.com/srikantsortur-tech/geo-b5-landform-region/main/images/CanadaLandform.png"; 
         
         // This is the HTML structure for the diagram (using the image URL)
-        const landformDiagramHtml = `<img src="${landformDiagramUrl}" onerror="this.onerror=null; this.src='https://placehold.co/800x450/cc5500/ffffff?text=Map+Placeholder+Error';" alt="Map of Canada's Landform Regions" class="diagram-image">`;
+        const landformDiagramHtml = `<img src="${landformDiagramUrl}" onerror="this.onerror=null; this.src='https://placehold.co/800x450/cc5500/ffffff?text=Image+Loading+Error.+Check+GitHub+Raw+URL';" alt="Map of Canada's Landform Regions" class="diagram-image">`;
 
 
         // DOM elements
