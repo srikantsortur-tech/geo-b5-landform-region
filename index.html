@@ -123,7 +123,7 @@
 
                     <!-- Question Area -->
                     <div class="bg-gray-700 p-4 rounded-lg shadow-inner min-h-[100px]">
-                        <p id="question-number" class="text-sm font-semibold text-gray-400 mb-2">Clue 1/10</p>
+                        <p id="question-number" class="text-sm font-semibold text-gray-400 mb-2">Clue 1/15</p>
                         <p id="question-text" class="text-2xl font-light text-white leading-relaxed">...</p>
                     </div>
 
@@ -481,6 +481,71 @@
                     }
                 },
                 clue_type: "Synthesis (Lowlands)",
+            },
+            // 11. NEW: Shield - Disorganized Drainage/Glaciation
+            {
+                question: "The **disorganized drainage pattern** of winding rivers, lakes, and swamps across the Canadian Shield is a direct consequence of which specific geological event?",
+                answer: "Canadian Shield",
+                explanation: {
+                    correct: "Correct! The Shield's drainage is a consequence of the **Glaciers** 🧊. The ice scraped the bedrock, creating depressions that became lakes, and deposited material that **dammed and redirected** the rivers, resulting in the chaotic, disorganized pattern 🌊.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While glaciation affected many regions, the unique combination of **impervious bedrock** and **glacial gouging** that led to this specific, disorganized drainage pattern is the signature of the Canadian Shield.`;
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Consequence (Glaciation)",
+            },
+            // 12. NEW: Appalachians - Formation Process
+            {
+                question: "Which region was formed by the **continental collision** of the North American plate with Europe and northern Africa during the assembly of Pangaea?",
+                answer: "Appalachian Mountains",
+                explanation: {
+                    correct: "Correct! The **Appalachian Mountains** 🍂 were uplifted and folded 300 million years ago when the North American plate crashed into Europe and northern Africa 💥 during the assembly of **Pangaea** 🗺️.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While this region is a highland, it formed either through subduction (Cordillera) or later, less dramatic folding (Innuitian), not the immense, ancient continental collision that formed the Appalachians.`;
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Process Detail (Collision)",
+            },
+            // 13. NEW: Cordillera - Limitation/Transportation
+            {
+                question: "The primarily **north-south orientation** of the mountains and valleys in this region creates a major obstacle for which necessary human activity?",
+                answer: "Western Cordillera",
+                explanation: {
+                    correct: "Correct! The mountains and valleys of the **Western Cordillera** 🏔️ run **north-south** ↕️. This makes **east-west transportation** ➡️⬅️ (highways, railways) extremely difficult, forcing travel through a few, expensive mountain passes.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This activity is uniquely hindered by the powerful, un-eroded north-south ranges of the Cordillera. The Appalachians, for example, have been eroded enough to allow easier passage.`;
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Consequence (Transportation)",
+            },
+            // 14. NEW: Great Lakes - Glaciation Effect
+            {
+                question: "The large, deep basins that contain the Great Lakes were physically created by which intense geological action?",
+                answer: "Great Lakes-St. Lawrence Lowlands",
+                explanation: {
+                    correct: "Correct! The Great Lakes are located in basins that were physically **gouged out and deepened** by the enormous weight and scraping action of the **Glaciers** 🧊 during the last Ice Age.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While other regions were affected by glaciers, the specific creation and deepening of the Great Lakes basins is a signature feature of the Great Lakes-St. Lawrence Lowlands.`;
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Process Detail (Glacial)",
+            },
+            // 15. NEW: Innuitian - Non-Development
+            {
+                question: "Although this mountain region contains valuable mineral resources (similar to the Appalachians), they are generally **not exploited** because of the extreme **remote location** and cost.",
+                answer: "Innuitian Mountains",
+                explanation: {
+                    correct: "Correct! The **Innuitian Mountains** 🧊 are so far north and **remote** 🥶 that the high **cost** 💸 of transportation and development outweighs the value of the minerals, leaving them unexploited for now.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region, while potentially resource-rich, is geographically accessible or its resources are actively mined (like the Shield or Cordillera), unlike the remote Innuitians.`;
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Synthesis (Economics)",
             }
         ].sort(() => Math.random() - 0.5); // Shuffle the questions
 
