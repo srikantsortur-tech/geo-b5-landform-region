@@ -90,8 +90,8 @@
 
     <div class="w-full max-w-5xl p-4 md:p-8 space-y-6">
         <header class="text-center">
-            <h1 class="text-4xl font-extrabold text-white mb-2">Canada's Landform Regions Challenge</h1>
-            <p class="text-xl text-gray-400">Match the geological clue to the correct region.</p>
+            <h1 class="text-4xl font-extrabold text-white mb-2">Canada's Landform Regions Challenge: Level 2</h1>
+            <p class="text-xl text-gray-400">Master the geological processes, comparisons, and consequences.</p>
         </header>
 
         <!-- Tab Navigation -->
@@ -159,6 +159,53 @@
                              <!-- Image will be inserted here by JavaScript -->
                         </div>
                     </div>
+
+                    <!-- --- UPDATED STRATEGY SECTION (STEP 1 IS NOW SIGNATURE FEATURE) --- -->
+                    <div class="p-5 rounded-xl border-t-8 border-gray-400 bg-gray-700 space-y-4 mb-8">
+                        <h3 class="text-3xl font-extrabold text-gray-200 mb-2 flex items-center">
+                            🧠 Advanced Question Elimination Strategy
+                        </h3>
+                        <p class="text-gray-300">Use these 3 steps to eliminate choices quickly on Level 2 questions:</p>
+                        
+                        <div class="space-y-3">
+                            
+                            <!-- Step 1 (Now Step 3 in old file) -->
+                            <div class="p-3 rounded-lg bg-gray-800">
+                                <p class="font-bold text-xl mb-1 text-sky-300">Step 1: Signature Feature Match 🗺️ (The Quickest Elimination!)</p>
+                                <p class="text-sm text-gray-300">Does the question use a unique, hard-to-miss geographic feature?</p>
+                                <ul class="list-disc list-inside ml-4 mt-2 text-sm text-gray-400">
+                                    <li>**Niagara Escarpment / Rift Valley / Most Populated** 🏙️: **Great Lakes-St. Lawrence Lowlands**.</li>
+                                    <li>**Lake Agassiz / Stepped Plains / Differential Erosion** 🌾: **Interior Plains**.</li>
+                                    <li>**Swampy Forest / Lignite Coal / Rests on Shield** 🌲: **Hudson Bay-Arctic Lowlands**.</li>
+                                    <li>**Fjords / Highest, Rugged Peaks** 🏔️: **Western Cordillera**.</li>
+                                    <li>**Rounded Peaks / Drowned Coastline (Harbours)** 🍂: **Appalachian Mountains**.</li>
+                                    <li>**Metallic Minerals / Oldest Rocks** 🛡️: **Canadian Shield**.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Step 2 (Now Step 1 in old file) -->
+                            <div class="p-3 rounded-lg bg-gray-800">
+                                <p class="font-bold text-xl mb-1 text-red-300">Step 2: Rock Type and Mineral Wealth 💎</p>
+                                <p class="text-sm text-gray-300">Use the general geological composition to cut the options by Lowlands/Highlands/Shield.</p>
+                                <ul class="list-disc list-inside ml-4 mt-2 text-sm text-gray-400">
+                                    <li>If the clue mentions **Metallic Minerals (Copper, Gold)** or **Igneous/Magma** 🌋: **Only consider the Canadian Shield 🛡️**. Eliminate ALL Sedimentary regions.</li>
+                                    <li>If the clue mentions **Oil, Gas, Potash, or Fossils** 🛢️: **Only consider Sedimentary regions (Lowlands & Plains)**. Eliminate the Shield.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Step 3 (Now Step 2 in old file) -->
+                            <div class="p-3 rounded-lg bg-gray-800">
+                                <p class="font-bold text-xl mb-1 text-yellow-300">Step 3: Age and Erosion (Highlands Only) ⏳</p>
+                                <p class="text-sm text-gray-300">If the question describes mountain shape, use age to decide between the three Highlands:</p>
+                                <ul class="list-disc list-inside ml-4 mt-2 text-sm text-gray-400">
+                                    <li>**Oldest/Most Eroded** 🍂: **Appalachian Mountains**.</li>
+                                    <li>**Youngest/Least Eroded** 🏔️: **Western Cordillera**.</li>
+                                    <li>**Mid-age/Barren Arctic** 🧊: **Innuitian Mountains**.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- --- END UPDATED STRATEGY SECTION --- -->
 
                     <div class="space-y-6">
                         <!-- Canadian Shield -->
@@ -261,77 +308,173 @@
     </div>
 
     <script>
-        // Data structure for the quiz (Updated for 7 landform regions)
+        // Data structure for the quiz (UPDATED FOR LEVEL 2 - Comparison, Process Detail, Application)
         const quizData = [
-            // Shield
+            // 1. Comparison: Age/Erosion
             {
-                question: "This region consists of **rounded hills** and is known as the **'storehouse of metallic minerals'** (gold, copper, nickel).",
-                answer: "Canadian Shield",
-                explanation: "The Canadian Shield contains the world's oldest rocks (Igneous/Metamorphic) and its surface is the eroded **roots of ancient mountains**.",
-                clue_type: "Canadian Shield",
-            },
-            // Western Cordillera
-            {
-                question: "This geologically **young** region features **high, rugged mountain ranges** (Rockies, Coast) and deep inlets called **fjords**.",
-                answer: "Western Cordillera",
-                explanation: "The Western Cordillera was formed by the **collision of the North American and Pacific plates** (subduction), leading to its tall, youthful appearance.",
-                clue_type: "Western Cordillera",
-            },
-            // Appalachians
-            {
-                question: "This is the **oldest highland region**, now characterized by **rolling mountains and hills** and a **'drowned coastline'** that creates deep harbours.",
+                question: "A geologist observes two mountain ranges. One has **rounded, heavily eroded peaks**; the other has **sharp, rugged peaks**. Which region corresponds to the **older, rounded** peaks?",
                 answer: "Appalachian Mountains",
-                explanation: "The Appalachians were formed 300 million years ago and have been eroded for so long that their jagged peaks are now rounded.",
-                clue_type: "Appalachian Mountains",
+                explanation: {
+                    correct: "Correct! The **Appalachian Mountains** 🍂 are the **oldest highland region** (formed 300 million years ago!). Millions of years of wind, water, and ice have worn their peaks down and made them rounded. This shows the power of **Erosion**! ⏳",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = '';
+                        if (selectedAnswer === "Western Cordillera") {
+                            ambiguityNote = 'You may have mistaken the **Western Cordillera** 🏔️ for the older range. However, the Cordillera is the **youngest** region. Its dramatic, **sharp peaks** indicate it hasn\'t had as much time to be worn down by erosion.';
+                        } else if (selectedAnswer === "Canadian Shield") {
+                            ambiguityNote = 'You chose the **Canadian Shield** 🛡️. The Shield is the oldest of all regions, but it is characterized by **rounded hills** (roots of ancient mountains), not towering mountain peaks.';
+                        } else {
+                            ambiguityNote = `You chose the **${selectedAnswer}** ❌. This is a lowland or a different highland region and is not known for having the oldest, most rounded mountain peaks in Canada.`;
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Comparison",
             },
-            // Interior Plains
+            // 2. Application: Mineral Association
             {
-                question: "This region, often called **'Canada's breadbasket'**, contains thick sedimentary rock layers that hold much of the country's **oil, gas, and potash**.",
+                question: "Which region's economic backbone is its concentration of **metallic minerals** (like copper, nickel, and gold), formed from cooling magma, contrasting with other regions rich in sedimentary fossil fuels?",
+                answer: "Canadian Shield",
+                explanation: {
+                    correct: "Correct! The **Canadian Shield** 🛡️ is called the **\"storehouse of metallic minerals\"** 💎. These deposits formed when molten rock (magma) 🌋 cooled slowly, allowing the minerals to crystallize and separate inside the Igneous and Metamorphic rock.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region is primarily built on sedimentary rock, which **DOES NOT** contain significant metallic mineral deposits.`;
+                        if (selectedAnswer === "Interior Plains") {
+                             ambiguityNote = 'You chose the **Interior Plains** 🌾. While the Interior Plains are rich, their wealth is in *non-metallic, sedimentary* fossil fuels (oil, gas) and potash, not the *metallic, igneous* minerals found in the Shield.';
+                        } else if (selectedAnswer === "Great Lakes-St. Lawrence Lowlands") {
+                            ambiguityNote = 'You chose the **Great Lakes-St. Lawrence Lowlands** 🏙️. Like the Interior Plains, this region is built on **sedimentary rock**, meaning it is wealthy due to fertile soil and urban development, **not** metallic mineral deposits formed from cooling magma.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Application (Mineral)",
+            },
+            // 3. Process Detail: Rift Valley
+            {
+                question: "The St. Lawrence Lowland was formed when the land between two **faults** collapsed, creating a major geological structure known as a:",
+                answer: "Great Lakes-St. Lawrence Lowlands",
+                explanation: {
+                    correct: "Correct! The St. Lawrence portion was created by **double faulting** 💥, where sections of the crust moved apart, causing the middle block to drop down, forming a **rift valley** ⬇️.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region was not created by the unique **rift valley** mechanism.`;
+                        if (selectedAnswer === "Western Cordillera") {
+                            ambiguityNote = 'You may have confused this with the Cordillera 🏔️, which was uplifted by plate *collision* (**subduction**) and folding, not a crustal collapse (faulting).';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Process Detail (Rift)",
+            },
+            // 4. Application: Ancient Life/Fossil Fuels
+            {
+                question: "The presence of commercial quantities of **oil and natural gas** in the Interior Plains is directly linked to the ancient existence of compressed organic material from:",
                 answer: "Interior Plains",
-                explanation: "The Interior Plains were formed by sediments deposited in shallow inland seas. The ancient coral reefs and layers now hold valuable fossil fuels and potash.",
-                clue_type: "Interior Plains",
+                explanation: {
+                    correct: "Correct! The oil and gas in the **Interior Plains** 🛢️ originated from ancient **coral reefs** 🐠 and microscopic organisms that lived in the shallow inland seas. Over millions of years, heat and pressure turned this organic material into fossil fuels within the sedimentary rock.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region either lacks sedimentary rock or the specific type of ancient life needed to form large fossil fuel deposits.`;
+                        if (selectedAnswer === "Canadian Shield") {
+                            ambiguityNote = 'You chose the **Canadian Shield** 🛡️. The Shield is largely igneous and metamorphic rock from the Precambrian era, *before* the types of life forms existed that produced oil and gas. Therefore, the Shield **does not contain fossil fuels** like oil and gas.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Application (Fossil Fuel)",
             },
-            // Great Lakes-St. Lawrence Lowlands
+            // 5. Application: Differential Erosion
             {
-                question: "This is the **most densely populated** and smallest region. The **Niagara Escarpment** and a **rift valley** are key features.",
-                answer: "Great Lakes-St. Lawrence Lowlands",
-                explanation: "The St. Lawrence portion was created by **faulting** that formed a rift valley. The Great Lakes portion features the prominent Niagara Escarpment (differential erosion).",
-                clue_type: "Great Lakes-St. Lawrence Lowlands",
+                question: "The three different levels of elevation across the Interior Plains (separated by escarpments) are the result of **harder rocks resisting erosion** more than softer rocks. This process is called:",
+                answer: "Interior Plains",
+                explanation: {
+                    correct: "Correct! This process is called **differential erosion** ✂️. The **Interior Plains** 🌾 have alternating layers of hard and soft sedimentary rock. The hard layers erode slowly, protecting the rock underneath and creating the sharp rises (escarpments) between the flat plains.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This process (differential erosion) is the key feature creating the stepped landscape of the Interior Plains.`;
+                        if (selectedAnswer === "Canadian Shield") {
+                            ambiguityNote = 'You chose the **Canadian Shield** 🛡️. The Shield has a rounded, relatively flat topography due to billions of years of *uniform* (or non-differential) erosion.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Application (Erosion)",
             },
-            // Innuitian Mountains
+            // 6. Comparison: Younger Highlands
             {
-                question: "These **barren, ice-covered mountains** in the **far north** are composed mainly of sedimentary rock, but resources are undeveloped due to their **remote location**.",
+                question: "Both the Appalachian and Innuitian Mountains formed from folded sedimentary rock, but the Innuitians have less erosion because they formed later, in the **Middle of the Mesozoic Era**. Which region is younger than the Appalachians but older than the Cordillera?",
                 answer: "Innuitian Mountains",
-                explanation: "The Innuitian Mountains are younger than Appalachians, older than Cordillera. Their extreme northern location makes them permanently barren.",
-                clue_type: "Innuitian Mountains",
+                explanation: {
+                    correct: "Correct! The **Innuitian Mountains** 🧊 are the **\"middle child\"** in age. They formed after the Appalachians (Paleozoic) but before the Western Cordillera (Cenozoic), giving them higher, less rounded peaks than the Appalachians.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region does not fit the specific age profile (younger than Appalachians, older than Cordillera).`;
+                        if (selectedAnswer === "Western Cordillera") {
+                            ambiguityNote = 'You chose the **Western Cordillera** 🏔️, which is the **youngest** highland region in Canada. Its peaks are the sharpest and most dramatic, and are not the "middle age" range being described.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Comparison (Age)",
             },
-            // Hudson Bay-Arctic Lowlands
+            // 7. Consequence: Drowned Coastline/Fjords
             {
-                question: "This region is a **very flat, low area** covered by **swampy forest** around Hudson Bay, with sedimentary rock resting directly on the Shield.",
-                answer: "Hudson Bay-Arctic Lowlands",
-                explanation: "This area was covered by water after the last ice age, which deposited the sand, silt, and clay that became the thin layer of sedimentary rock over the Shield.",
-                clue_type: "Hudson Bay-Arctic Lowlands",
+                question: "The flooding of former river valleys by rising sea levels (due to the melting of ice and land sinking) in coastal areas leads to the formation of: ",
+                answer: "Western Cordillera",
+                explanation: {
+                    correct: "Correct! The glaciated coastal valleys in the **Western Cordillera** 🌊 were flooded by the sea, creating spectacular, deep, narrow inlets called **fjords** 🛶. This is a consequence of glaciation and sea level change.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While many regions have coastal features, the formation of **fjords** (drowned glacial valleys) is the signature coastal feature of the Cordillera.`;
+                        if (selectedAnswer === "Appalachian Mountains") {
+                            ambiguityNote = 'You chose the **Appalachian Mountains** 🍂. While the Appalachians have a "drowned coastline" with long bays, the term **fjord** specifically refers to the deep, U-shaped glacial valleys common along the rugged British Columbia coast (Western Cordillera).';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Consequence (Fjords)",
             },
-            // Process Question: Plate Movement
+            // 8. Definition: Source of Lowland Bedrock
             {
-                question: "Which mountain range was formed when **North America collided with Europe and northern Africa** (forming Pangaea)?",
-                answer: "Appalachian Mountains",
-                explanation: "This collision caused the layers of sedimentary rock in the Appalachians to be uplifted and folded at the end of the Paleozoic era.",
-                clue_type: "Process",
-            },
-            // Process Question: Glaciation
-            {
-                question: "The **scraping and gouging action of glaciers** created basins that filled with water, forming the hundreds of thousands of lakes that characterize this region.",
+                question: "The sedimentary bedrock underlying all three lowland regions (Interior Plains, Great Lakes, Hudson Bay) was formed primarily from:",
                 answer: "Canadian Shield",
-                explanation: "The impervious bedrock of the Canadian Shield, combined with glacial scraping, created the disorganized drainage pattern and vast number of lakes seen today.",
-                clue_type: "Process",
+                explanation: {
+                    correct: "Correct! The **Canadian Shield** 🛡️ is the geological foundation of Canada. Over billions of years, its ancient rocks eroded 💨, and the resulting sediments were washed into the surrounding seas, forming the sedimentary rock layers that became the Lowlands.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While this region is built on sedimentary rock, it did not provide the original material.`;
+                        if (selectedAnswer === "Interior Plains") {
+                            ambiguityNote = 'You chose the **Interior Plains** 🌾. While the Plains are built on sedimentary rock, that rock material **originated from the erosion of the ancient Canadian Shield**, not from the Interior Plains itself.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Definition (Source)",
             },
-            // Clue: Most important for manufacturing
+            // 9. Application: Glacial Lakes
             {
-                question: "This region makes up only 1.4% of Canada's area but is the **industrial and urban heartland**, containing Toronto and Montreal.",
-                answer: "Great Lakes-St. Lawrence Lowlands",
-                explanation: "The excellent soils, warm climate, and flat land make it ideal for both agriculture and the high concentration of industry and population (about 50% of Canada's population).",
-                clue_type: "Great Lakes-St. Lawrence Lowlands",
+                question: "The massive flat plains and **fertile soil** that characterize Southern Manitoba were created by sediments deposited on the bottom of a huge ancient body of water called:",
+                answer: "Interior Plains",
+                explanation: {
+                    correct: "Correct! This huge ancient body was **Lake Agassiz** 🏞️. When the glaciers melted, this massive lake formed and then drained. It left behind the deep, flat, nutrient-rich lake bed sediments that make the **Interior Plains** 🌾 the **\"breadbasket\"** of Canada.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. While this region was affected by glaciation, it was not the site of the massive Lake Agassiz and its signature fertile plain.`;
+                        if (selectedAnswer === "Great Lakes-St. Lawrence Lowlands") {
+                            ambiguityNote = 'You chose the **Great Lakes-St. Lawrence Lowlands** 🏙️. This area also saw large glacial lakes (like Lake Iroquois), but the massive, fertile flat plain of Southern Manitoba (the "breadbasket") is the definitive consequence of Lake Agassiz in the Interior Plains.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Application (Glacial Lakes)",
+            },
+            // 10. Synthesis: Low-lying Features
+            {
+                question: "This region is characterized by flat, low-lying, **swampy** land where thin sedimentary rock layers rest directly on the Shield, containing deposits of **lignite coal**.",
+                answer: "Hudson Bay-Arctic Lowlands",
+                explanation: {
+                    correct: "Correct! The **Hudson Bay-Arctic Lowlands** 🌲 are defined by this low, wet topography near the Bay (due to recent glaciation and marine deposits) and the presence of **lignite** (low-quality coal) in the Arctic islands.",
+                    incorrect: (selectedAnswer) => {
+                        let ambiguityNote = `You chose the **${selectedAnswer}** ❌. This region is not characterized by the unique combination of **swampy forest** and **lignite coal** deposits.`;
+                        if (selectedAnswer === "Great Lakes-St. Lawrence Lowlands") {
+                             ambiguityNote = 'You chose the **Great Lakes-St. Lawrence Lowlands** 🏙️. While flat, this is the urban and industrial center, not the low-lying, vast **swampy forest** containing lignite coal deposits, which is unique to the Hudson Bay Lowlands.';
+                        }
+                        return `❌ **Incorrect.** ${ambiguityNote}`;
+                    }
+                },
+                clue_type: "Synthesis (Lowlands)",
             }
         ].sort(() => Math.random() - 0.5); // Shuffle the questions
 
@@ -441,25 +584,20 @@
             if (!selectedButton.classList.contains('btn-region')) return;
 
             const selectedAnswer = selectedButton.dataset.answer;
-            const correctAnswer = quizData[currentQuestionIndex].answer;
-            const explanation = quizData[currentQuestionIndex].explanation;
-
-            // Disable all buttons
-            Array.from(answerButtonsContainer.children).forEach(button => {
-                button.disabled = true;
-            });
-
-            // Show feedback
-            feedbackArea.classList.remove('hidden');
-            nextButton.classList.remove('hidden');
-
+            const currentQData = quizData[currentQuestionIndex];
+            const correctAnswer = currentQData.answer;
+            
+            let feedbackText;
+            
+            // Determine the feedback text based on correctness
             if (selectedAnswer === correctAnswer) {
                 score++;
                 selectedButton.classList.add('correct-answer');
                 feedbackArea.style.backgroundColor = 'rgba(16, 185, 129, 0.2)'; // Green transparent
-                feedbackTitleEl.textContent = "That's Correct!";
+                feedbackTitleEl.textContent = "✅ Excellent! Level 2 Mastered!";
                 feedbackTitleEl.classList.remove('text-red-400');
                 feedbackTitleEl.classList.add('text-green-400');
+                feedbackText = currentQData.explanation.correct;
             } else {
                 selectedButton.classList.add('incorrect-answer');
                 // Find the correct button and highlight it
@@ -467,12 +605,32 @@
                 correctButton.classList.add('correct-answer');
 
                 feedbackArea.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'; // Red transparent
-                feedbackTitleEl.textContent = "Not Quite. Let's Review!";
+                feedbackTitleEl.textContent = "❌ Not Quite. Let's Break Down the Geology!";
                 feedbackTitleEl.classList.remove('text-green-400');
                 feedbackTitleEl.classList.add('text-red-400');
+                
+                // --- CUSTOMIZED FEEDBACK GENERATION ---
+                const incorrectExplanation = currentQData.explanation.incorrect(selectedAnswer);
+                const correctExplanation = currentQData.explanation.correct;
+
+                // Add a specific "Also Note" section for the closest ambiguous answer (Interior Plains in this case)
+                let secondaryNote = '';
+                if (correctAnswer === "Canadian Shield" && selectedAnswer !== "Interior Plains") {
+                    secondaryNote = `<br><br>🤔 **Common Ambiguity:** People often confuse the Shield with the **Interior Plains** 🌾 because both are resource-rich. However, the Plains only have non-metallic resources (oil, gas, potash) in their **sedimentary rock**, while the Shield has **metallic** resources in its **igneous rock** 🛡️.`;
+                }
+                // --- END CUSTOMIZED FEEDBACK GENERATION ---
+
+                feedbackText = incorrectExplanation + secondaryNote + '<br><br>👉 **The Correct Insight:** ' + correctExplanation;
             }
 
-            feedbackExplanationEl.innerHTML = explanation;
+            // Disable all buttons and show feedback
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.disabled = true;
+            });
+            feedbackArea.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+
+            feedbackExplanationEl.innerHTML = feedbackText;
             scoreDisplay.textContent = `${score}/${currentQuestionIndex + 1}`;
         }
 
@@ -484,8 +642,8 @@
 
         // Function to show final results
         function showResults() {
-            questionNumberEl.textContent = `Challenge Complete!`;
-            questionTextEl.innerHTML = `You finished the quiz! You scored **${score} out of ${totalQuestions}** (${Math.round((score / totalQuestions) * 100)}%). Fantastic work!`;
+            questionNumberEl.textContent = `Level 2 Challenge Complete!`;
+            questionTextEl.innerHTML = `You finished the Level 2 quiz! You scored **${score} out of ${totalQuestions}** (${Math.round((score / totalQuestions) * 100)}%). Your understanding of geological processes is strong!`;
 
             answerButtonsContainer.innerHTML = '';
             feedbackArea.classList.remove('hidden');
@@ -493,7 +651,7 @@
             feedbackTitleEl.textContent = 'Next Steps:';
             feedbackTitleEl.classList.remove('text-red-400');
             feedbackTitleEl.classList.add('text-green-400');
-            feedbackExplanationEl.innerHTML = 'Review the questions you missed, or visit the **Cheat Sheet** for a quick refresher. You can refresh the page to restart the challenge!';
+            feedbackExplanationEl.innerHTML = 'Review the detailed Level 2 explanations. You can refresh the page to restart the challenge!';
             nextButton.classList.add('hidden');
         }
 
